@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlimViewer Library Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/antd@4.22.8/dist/antd.min.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/antd@4.22.8/dist/antd.min.css">
+    <link rel="stylesheet" href="./dist/index.umd.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script src="./dist/index.umd.js"></script>
+    <script>
+        const { SlimViewer } = SlimViewer;
+        const { createElement: h } = React;
+        const { createRoot } = ReactDOM;
+        
+        const config = {
+            path: '/viewer',
+            servers: [{
+                id: 'example',
+                url: 'https://healthcare.googleapis.com/v1/projects/synlab-pacs-workflow/locations/europe-west3/datasets/synlab-healthcare-dataset/dicomStores/synlab-dicom-data-store/dicomWeb',
+                write: false
+            }],
+            oidc: {
+                authority: "https://accounts.google.com",
+                clientId: "62039621046-rt1fu02rnnfrlf2icjh2q1cmervka8au.apps.googleusercontent.com",
+                scope: "email profile openid https://www.googleapis.com/auth/cloud-healthcare",
+                grantType: "implicit"
+            },
+            disableWorklist: false,
+            disableAnnotationTools: false,
+            showLeftCaseSider: true,
+            showRightSlideViewerSidebar: true,
+            showHeaderInSlideViewer: true,
+            enableServerSelection: false,
+            mode: 'light',
+            preload: true,
+            annotations: []
+        };
+
+        const App = () => {
+            return h('div', { style: { height: '100vh', display: 'flex', flexDirection: 'column' } },
+                h('h1', { style: { padding: '20px', margin: 0, background: '#f0f0f0' } }, 'SlimViewer Library Test'),
+                h('div', { style: { flex: 1, border: '1px solid #ccc' } },
+                    h(SlimViewer, { 
+                        config: config,
+                        basePath: '/viewer',
+                        style: { height: '100%' }
+                    })
+                )
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(h(App));
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"version":3,"file":"xhrRetryHook.d.ts","sourceRoot":"","sources":["../../src/utils/xhrRetryHook.ts"],"names":[],"mappings":"AAEA,OAAO,EACL,oBAAoB,EACpB,iCAAiC,EAClC,MAAM,cAAc,CAAA;AAErB,KAAK,WAAW,GAAG,CACjB,OAAO,EAAE,cAAc,EACvB,QAAQ,EAAE,iCAAiC,KACxC,cAAc,CAAA;AAEnB;;;;;;;;;;;;;;;;;;;GAmBG;AACH,eAAO,MAAM,eAAe,aAAa,oBAAoB,KAOzD,WA+EH,CAAA;AAED,eAAe,eAAe,CAAA"}

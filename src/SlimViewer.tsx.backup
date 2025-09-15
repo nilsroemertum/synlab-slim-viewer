@@ -1,0 +1,40 @@
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import { AppConfig } from './AppConfig.d';
+
+interface SlimViewerProps {
+  config: AppConfig;
+  basePath?: string;
+  onStudySelect?: (studyInstanceUID: string) => void;
+  onError?: (error: Error) => void;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export const SlimViewer: React.FC<SlimViewerProps> = ({ 
+  config, 
+  basePath = '/viewer',
+  onStudySelect,
+  onError,
+  className,
+  style
+}) => {
+  // Set global config for the app
+  if (typeof window !== 'undefined') {
+    (window as any).config = config;
+  }
+
+  return (
+    <div className={className} style={style}>
+      <App 
+        config={config}
+        version="0.42.4"
+        name="slim"
+        homepage="https://github.com/ImagingDataCommons/slim"
+      />
+    </div>
+  );
+};
+
+export default SlimViewer;

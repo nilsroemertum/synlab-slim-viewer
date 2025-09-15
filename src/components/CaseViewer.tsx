@@ -202,7 +202,7 @@ function Viewer (props: ViewerProps): JSX.Element | null {
   const handleSeriesSelection = ({ seriesInstanceUID }: { seriesInstanceUID: string }): void => {
     console.info(`switch to series "${seriesInstanceUID}"`)
     let urlPath = (
-      `/studies/${studyInstanceUID}` +
+      `studies/${studyInstanceUID}` +
       `/series/${seriesInstanceUID}`
     )
 
@@ -212,6 +212,13 @@ function Viewer (props: ViewerProps): JSX.Element | null {
         urlPath += `/series/${seriesInstanceUID}`
       } else {
         urlPath = urlPath.replace(/\/series\/[^/]+/, `/series/${seriesInstanceUID}`)
+      }
+    } else if (location.pathname.includes('/studies/')) {
+      // If we're already in a study context, just update the series part
+      if (!location.pathname.includes('/series/')) {
+        urlPath = location.pathname + `/series/${seriesInstanceUID}`
+      } else {
+        urlPath = location.pathname.replace(/\/series\/[^/]+/, `/series/${seriesInstanceUID}`)
       }
     }
 

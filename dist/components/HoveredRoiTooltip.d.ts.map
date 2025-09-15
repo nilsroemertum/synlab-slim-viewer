@@ -1,0 +1,1 @@
+{"version":3,"file":"HoveredRoiTooltip.d.ts","sourceRoot":"","sources":["../../src/components/HoveredRoiTooltip.tsx"],"names":[],"mappings":";AAAA,QAAA,MAAM,iBAAiB;eAKV,MAAM;eACN,MAAM;UACX,MAAM;QAAE,KAAK,EAAE,MAAM,CAAC;QAAC,MAAM,EAAE,MAAM,CAAC;QAAC,UAAU,EAAE,MAAM;YAAE,MAAM,MAAM,CAAC;YAAC,KAAK,EAAE,MAAM,CAAA;SAAE,CAAC,CAAA;KAAC,CAAC;MAC/F,WAiCH,CAAA;AAED,eAAe,iBAAiB,CAAA"}

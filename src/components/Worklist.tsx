@@ -85,7 +85,16 @@ class Worklist extends React.Component<WorklistProps, WorklistState> {
   }
 
   handleClick = (event: React.SyntheticEvent, study: dmv.metadata.Study): void => {
-    this.props.navigate(`/studies/${study.StudyInstanceUID}`)
+    const currentPath = this.props.location.pathname
+    let urlPath = `studies/${study.StudyInstanceUID}`
+    
+    // If we're already in a study context, navigate to the new study
+    if (currentPath.includes('/studies/')) {
+      // Replace the current study with the new one
+      urlPath = currentPath.replace(/\/studies\/[^/]+/, `/studies/${study.StudyInstanceUID}`)
+    }
+    
+    this.props.navigate(urlPath)
   }
 
   fetchData = ({ offset, limit, searchCriteria }: {
