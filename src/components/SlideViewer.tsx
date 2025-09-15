@@ -3602,26 +3602,28 @@ class SlideViewer extends React.Component<SlideViewerProps, SlideViewerState> {
           />
         </SlideViewerContent>
 
-        <SlideViewerSidebar
-          labelViewportRef={this.labelViewportRef}
-          labelViewer={this.labelViewer}
-          openSubMenuItems={openSubMenuItems}
-          specimenMenu={specimenMenu}
-          iccProfilesMenu={iccProfilesMenu}
-          segmentationInterpolationMenu={segmentationInterpolationMenu}
-          equipmentMenu={equipmentMenu}
-          opticalPathMenu={opticalPathMenu}
-          presentationStateMenu={presentationStateMenu}
-          annotationMenuItems={annotationMenuItems}
-          annotationGroupMenu={annotationGroupMenu}
-          segmentationMenu={segmentationMenu}
-          parametricMapMenu={parametricMapMenu}
-          annotations={annotations}
-          visibleRoiUIDs={this.state.visibleRoiUIDs}
-          onAnnotationVisibilityChange={this.handleAnnotationVisibilityChange}
-          onRoiStyleChange={this.handleRoiStyleChange}
-          defaultAnnotationStyles={this.defaultAnnotationStyles}
-        />
+        {this.props.showRightSlideViewerSidebar && (
+          <SlideViewerSidebar
+            labelViewportRef={this.labelViewportRef}
+            labelViewer={this.labelViewer}
+            openSubMenuItems={openSubMenuItems}
+            specimenMenu={specimenMenu}
+            iccProfilesMenu={iccProfilesMenu}
+            segmentationInterpolationMenu={segmentationInterpolationMenu}
+            equipmentMenu={equipmentMenu}
+            opticalPathMenu={opticalPathMenu}
+            presentationStateMenu={presentationStateMenu}
+            annotationMenuItems={annotationMenuItems}
+            annotationGroupMenu={annotationGroupMenu}
+            segmentationMenu={segmentationMenu}
+            parametricMapMenu={parametricMapMenu}
+            annotations={annotations}
+            visibleRoiUIDs={this.state.visibleRoiUIDs}
+            onAnnotationVisibilityChange={this.handleAnnotationVisibilityChange}
+            onRoiStyleChange={this.handleRoiStyleChange}
+            defaultAnnotationStyles={this.defaultAnnotationStyles}
+          />
+        )}
 
         {this.state.isHoveredRoiTooltipVisible &&
         this.state.hoveredRoiAttributes.length > 0

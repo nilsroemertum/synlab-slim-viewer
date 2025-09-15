@@ -60,7 +60,8 @@ function ParametrizedSlideViewer ({
   app,
   preload,
   enableAnnotationTools,
-  annotations
+  annotations,
+  showRightSlideViewerSidebar
 }: {
   clients: { [key: string]: DicomWebManager }
   slides: Slide[]
@@ -74,6 +75,7 @@ function ParametrizedSlideViewer ({
   preload: boolean
   enableAnnotationTools: boolean
   annotations: AnnotationSettings[]
+  showRightSlideViewerSidebar?: boolean
 }): JSX.Element | null {
   const { studyInstanceUID = '', seriesInstanceUID = '' } = useParams<{ studyInstanceUID: string, seriesInstanceUID: string }>()
   const location = useLocation()
@@ -163,6 +165,7 @@ function ParametrizedSlideViewer ({
         preload={preload}
         annotations={annotations}
         enableAnnotationTools={enableAnnotationTools}
+        showRightSlideViewerSidebar={showRightSlideViewerSidebar}
         app={app}
         user={user}
         derivedDataset={derivedDataset ?? undefined}
@@ -184,6 +187,8 @@ interface ViewerProps extends RouteComponentProps {
   annotations: AnnotationSettings[]
   enableAnnotationTools: boolean
   preload: boolean
+  showLeftCaseSider?: boolean
+  showRightSlideViewerSidebar?: boolean
   user?: {
     name: string
     email: string
@@ -191,7 +196,7 @@ interface ViewerProps extends RouteComponentProps {
 }
 
 function Viewer (props: ViewerProps): JSX.Element | null {
-  const { clients, studyInstanceUID, location, navigate } = props
+  const { clients, studyInstanceUID, location, navigate, showLeftCaseSider = true, showRightSlideViewerSidebar = true } = props
   const { slides, isLoading } = useSlides({ clients, studyInstanceUID })
 
   const handleSeriesSelection = ({ seriesInstanceUID }: { seriesInstanceUID: string }): void => {
@@ -257,40 +262,42 @@ function Viewer (props: ViewerProps): JSX.Element | null {
   }
 
   return (
-    <Layout style={{ height: '100%' }} hasSider>
-      <Layout.Sider
-        width={300}
-        style={{
-          height: '100%',
-          borderRight: 'solid',
-          borderRightWidth: 0.25,
-          overflow: 'hidden',
-          background: 'none'
-        }}
-      >
-        <Menu
-          mode='inline'
-          defaultOpenKeys={['patient', 'study', 'clinical-trial', 'slides']}
-          style={{ height: '100%' }}
-          inlineIndent={14}
+    <Layout style={{ height: '100%' }} hasSider={showLeftCaseSider}>
+      {showLeftCaseSider && (
+        <Layout.Sider
+          width={300}
+          style={{
+            height: '100%',
+            borderRight: 'solid',
+            borderRightWidth: 0.25,
+            overflow: 'hidden',
+            background: 'none'
+          }}
         >
-          <Menu.SubMenu key='patient' title='Patient'>
-            <Patient metadata={refImage} />
-          </Menu.SubMenu>
-          <Menu.SubMenu key='study' title='Study'>
-            <Study metadata={refImage} />
-          </Menu.SubMenu>
-          {clinicalTrialMenu}
-          <Menu.SubMenu key='slides' title='Slides'>
-            <SlideList
-              clients={props.clients}
-              metadata={slides}
-              selectedSeriesInstanceUID={selectedSeriesInstanceUID}
-              onSeriesSelection={handleSeriesSelection}
-            />
-          </Menu.SubMenu>
-        </Menu>
-      </Layout.Sider>
+          <Menu
+            mode='inline'
+            defaultOpenKeys={['patient', 'study', 'clinical-trial', 'slides']}
+            style={{ height: '100%' }}
+            inlineIndent={14}
+          >
+            <Menu.SubMenu key='patient' title='Patient'>
+              <Patient metadata={refImage} />
+            </Menu.SubMenu>
+            <Menu.SubMenu key='study' title='Study'>
+              <Study metadata={refImage} />
+            </Menu.SubMenu>
+            {clinicalTrialMenu}
+            <Menu.SubMenu key='slides' title='Slides'>
+              <SlideList
+                clients={props.clients}
+                metadata={slides}
+                selectedSeriesInstanceUID={selectedSeriesInstanceUID}
+                onSeriesSelection={handleSeriesSelection}
+              />
+            </Menu.SubMenu>
+          </Menu>
+        </Layout.Sider>
+      )}
 
       <Routes>
         <Route
@@ -302,6 +309,7 @@ function Viewer (props: ViewerProps): JSX.Element | null {
               preload={props.preload}
               annotations={props.annotations}
               enableAnnotationTools={props.enableAnnotationTools}
+              showRightSlideViewerSidebar={showRightSlideViewerSidebar}
               app={props.app}
               user={props.user}
             />

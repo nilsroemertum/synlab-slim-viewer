@@ -58,6 +58,7 @@ export interface SlideViewerProps extends RouteComponentProps {
   annotations: AnnotationSettings[]
   enableAnnotationTools: boolean
   preload: boolean
+  showRightSlideViewerSidebar?: boolean
   user?: {
     name: string | undefined
     email: string | undefined

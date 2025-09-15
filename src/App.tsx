@@ -43,6 +43,8 @@ function ParametrizedCaseViewer ({ clients, user, app, config }: {
 
   const enableAnnotationTools = !(config.disableAnnotationTools ?? false)
   const preload = config.preload ?? false
+  const showLeftCaseSider = config.showLeftCaseSider ?? true
+  const showRightSlideViewerSidebar = config.showRightSlideViewerSidebar ?? true
   return (
     <ValidationProvider clients={clients} studyInstanceUID={studyInstanceUID}>
       <CaseViewer
@@ -52,6 +54,8 @@ function ParametrizedCaseViewer ({ clients, user, app, config }: {
         preload={preload}
         app={app}
         enableAnnotationTools={enableAnnotationTools}
+        showLeftCaseSider={showLeftCaseSider}
+        showRightSlideViewerSidebar={showRightSlideViewerSidebar}
         studyInstanceUID={studyInstanceUID}
       />
     </ValidationProvider>
@@ -527,16 +531,18 @@ class App extends React.Component<AppProps, AppState> {
               path='/studies/:studyInstanceUID/*'
               element={
                 <Layout style={layoutStyle}>
-                  <Header
-                    app={appInfo}
-                    user={this.state.user}
-                    showWorklistButton={enableWorklist}
-                    onServerSelection={this.handleServerSelection}
-                    onUserLogout={isLogoutPossible ? onLogout : undefined}
-                    showServerSelectionButton={enableServerSelection}
-                    clients={this.state.clients}
-                    defaultClients={this.state.defaultClients}
-                  />
+                  {this.props.config.showHeaderInSlideViewer !== false && (
+                    <Header
+                      app={appInfo}
+                      user={this.state.user}
+                      showWorklistButton={enableWorklist}
+                      onServerSelection={this.handleServerSelection}
+                      onUserLogout={isLogoutPossible ? onLogout : undefined}
+                      showServerSelectionButton={enableServerSelection}
+                      clients={this.state.clients}
+                      defaultClients={this.state.defaultClients}
+                    />
+                  )}
                   <Layout.Content style={layoutContentStyle}>
                     <ParametrizedCaseViewer
                       clients={this.state.clients}

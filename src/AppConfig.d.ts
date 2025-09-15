@@ -106,4 +106,7 @@ export default interface AppConfig {
     enableInProduction?: boolean
     enableInDevelopment?: boolean
   }
+  showLeftCaseSider?: boolean
+  showRightSlideViewerSidebar?: boolean
+  showHeaderInSlideViewer?: boolean
 }
